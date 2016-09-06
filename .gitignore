@@ -1,4 +1,10 @@
 #Ignore the following folder
 local
 fq
-#lib
+lib
+*.bt2
+*.fastq
+resources
+test*
+out
+*.txt
