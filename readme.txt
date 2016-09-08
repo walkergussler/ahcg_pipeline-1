@@ -1,18 +1,13 @@
 #github stuff
 www.github.com/
 sign in/make an account
-git clone https://github.com/shashidhar22/ahcg_pipeline
-#fork?
-
-#brca stuff -most common one, has all the exons we care about
-
-wget http://vannberg.biology.gatech.edu/data/ahcg2016/reference_genome/hg19_refGene.txt
-write python script to modify file to make it look like a bed file
-write a different python script that does what we actually need to do
-use getfasta to obtain fasta file from appropriately designed bed file: http://bedtools.readthedocs.io/en/latest/content/tools/getfasta.html
+git clone https://github.com/shashidhar22/ahcg_pipeline #clones base repository - gives Trimmomatic, Bowtie, Picard, and GATK
 
 #actual stuff
 download virtualbox as well as .ova file for virtual box system
+https://da1s119xsxmu0.cloudfront.net/sites/developer/native/nativeappsvm/BaseSpace%20Native%20App%20VM%20(phix%20only)%20v9.ova
+https://www.virtualbox.org/wiki/Downloads
+https://developer.basespace.illumina.com/docs/content/documentation/native-apps/setup-dev-environment
 install virtualboxin the virtualbox window, select file -> Import Appliance
 use the .ova file as your appliance
 login: vagrant 
@@ -37,7 +32,8 @@ wget www.prism.gatech.edu/~sravishankar9/resources.tar.gz
 tar -zxvf resources.tar.gz
 gunzip dbsnp_138.hg19.vcf.gz
 Samtools faidx hg19.fa
-got circulating bowtie files in the interest of time 
+got circulating bowtie files in the interest of time, can be built with the following
+bowtie2-build -f hg19.fa hg19
 java -jar picard.jar CreateSequenceDictionary R=hg19.fa O=hg19.dict
 #it is important that all three hg19 files be kept in the same directory, reads files and bowtie references should be in the same directory as the python program
 
@@ -47,3 +43,28 @@ python ahcg_pipeline.py -t lib/Trimmomatic-0.36/trimmomatic-0.36.jar -b lib/bowt
 #Java installation workflow:
 https://docs.oracle.com/javase/8/docs/technotes/guides/install/linux_jre.html#CFHIEGAA
 
+#fork?
+fork repository into my own repository
+update .git/config to change user
+update .gitignore file to exclude all the files we don't want to track
+git config --global user.email 'email@domain.edu'
+git config --global user.name 'name'
+git commit -m 'message here'
+git push origin master
+#brca stuff -most common one, has all the exons we care about
+
+
+#getting BRCA1 fasta 
+wget http://vannberg.biology.gatech.edu/data/ahcg2016/reference_genome/hg19_refGene.txt
+grep BRCA1 hg19_refGene.txt
+use last one
+convert 23 part block list into 23 line bed file
+	python script 
+use getfasta to obtain fasta file from appropriately designed bed file: http://bedtools.readthedocs.io/en/latest/content/tools/getfasta.html
+bedtools getfasta -s -fo results.fa -fi hg19.fa -bed brca1.bed
+
+wget http://vannberg.biology.gatech.edu/data/ahcg2016/fq/NA12878_brca_r{1,2}.fastq
+samtools view -L <bed file> -b -o <output bam> <input bam>
+bedtools bamtofastq -i <bam file> -fq <fastq r1> <fastq r2>
+
+ 
