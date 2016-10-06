@@ -67,4 +67,21 @@ wget http://vannberg.biology.gatech.edu/data/ahcg2016/fq/NA12878_brca_r{1,2}.fas
 samtools view -L <bed file> -b -o <output bam> <input bam>
 bedtools bamtofastq -i <bam file> -fq <fastq r1> <fastq r2>
 
- 
+download various bam files from ncbi:
+ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/project.NIST_NIST7035_H7AP8ADXX_TAAGGCGA_1_NA12878.bwa.markDuplicates.bam
+ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/project.NIST_NIST7035_H7AP8ADXX_TAAGGCGA_2_NA12878.bwa.markDuplicates.bam
+ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/project.NIST_NIST7086_H7AP8ADXX_CGTACTAG_1_NA12878.bwa.markDuplicates.bam
+ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/project.NIST_NIST7086_H7AP8ADXX_CGTACTAG_2_NA12878.bwa.markDuplicates.bam
+
+samtools merge output.bam <bam1> <bam2> <bam3> <bam4>
+
+#to edit vcf files in which entries begin with '#' instead of 'chr#'
+awk '{if($0 !~ /^#/) print "chr"$0; else print $0}' NA12878_GIAB.vcf > GIAB_goldStandard.vcf
+
+#bedtools intersect is a useful tool to be able to combine a bed file with a vcf or with two vcf files
+#to take a subset of a vcf file according to regions prescribed in a bed file, use a command like
+bedtools intersect -header -wa -a variants.vcf -b cancerGenes.bed > foundVariants.vcf
+#to combine two vcf files and take the intersection of the two, use 
+bedtools intersect -header -a foundVariants.vcf -b goldCancerVariants.vcf > overlappingVariants.vcf 
+
+we can use combineVCF-master.py to compare any two vcf files given a gene list
