@@ -85,3 +85,15 @@ bedtools intersect -header -wa -a variants.vcf -b cancerGenes.bed > foundVariant
 bedtools intersect -header -a foundVariants.vcf -b goldCancerVariants.vcf > overlappingVariants.vcf 
 
 we can use combineVCF-master.py to compare any two vcf files given a gene list
+
+to get files for GATK resource bundle:
+wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/hapmap_3.3.hg19.sites.vcf.gz
+wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/1000G_omni2.5.hg19.sites.vcf.gz
+wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/1000G_phase1.snps.high_confidence.hg19.sites.vcf.gz
+With all 3 of these files, perform the following (example file called AAA)
+gunzip AAA
+bgzip AAA
+tabix -p vcf AAA
+
+wget ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/2.8/hg19/dbsnp_138.hg19.vcf.gz
+
