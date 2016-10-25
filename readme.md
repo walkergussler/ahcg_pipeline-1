@@ -98,13 +98,13 @@ ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Ex
 samtools merge output.bam <bam1> <bam2> <bam3> <bam4>
 ```
 
-#to edit vcf files in which entries begin with '#' instead of 'chr#'
+to edit vcf files in which entries begin with '#' instead of 'chr#', use
 awk '{if($0 !~ /^#/) print "chr"$0; else print $0}' NA12878_GIAB.vcf > GIAB_goldStandard.vcf
 
-#bedtools intersect is a useful tool to be able to combine a bed file with a vcf or with two vcf files
-#to take a subset of a vcf file according to regions prescribed in a bed file, use a command like
+bedtools intersect is a useful tool to be able to combine a bed file with a vcf or with two vcf files
+to take a subset of a vcf file according to regions prescribed in a bed file, use a command like
 bedtools intersect -header -wa -a variants.vcf -b cancerGenes.bed > foundVariants.vcf
-#to combine two vcf files and take the intersection of the two, use 
+to combine two vcf files and take the intersection of the two, use 
 bedtools intersect -header -a foundVariants.vcf -b goldCancerVariants.vcf > overlappingVariants.vcf 
 
 we can use combineVCF-master.py to compare any two vcf files given a gene list
