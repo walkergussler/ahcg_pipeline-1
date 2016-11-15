@@ -122,6 +122,12 @@ gunzip XXX
 bgzip XXX
 tabix -p vcf XXX
 
+# variant recalibration: use the following
+```{sh}
+bash bcoc_vqsr.sh
+bash bcoc_apply_recal.sh
+```
+If you try to run these programs yourself, you will likely have to adjust the paths at the start of the script
 
 # matching variants from vcf with clinical risks
 
@@ -146,4 +152,11 @@ bedtools intersect -split -a brca1.bed -b na12878.bga.bed -bed > brca1.final.bed
 awk '{printf("%s\t%s\t%s\t%s\t%s\t%s\n",$1,$2,$3,$4,$10,$6)}' brca1.coverage_joined.bed > brca1.coverage_final.bed
 bedtools intersect -a brca1.final.bed -b brca_clinical_nonbenign_xref.bed -wo > brca_clinical_nonbenign_final.bed
 cat brca_clinical_nonbenign_final.bed | cut -f4,5,7,8,10
+```
+
+## Building bed file for DCM genes
+Get list of genes: gene-list-dcm.txt
+grep gene names from gene-list-dcm.txt out of hg19-refGene.txt to make input for gnereatebed.pl
+```{sh}
+./generatebed.pl 
 ```
