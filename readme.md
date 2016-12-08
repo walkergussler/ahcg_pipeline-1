@@ -160,3 +160,17 @@ grep gene names from gene-list-dcm.txt out of hg19-refGene.txt to make input for
 ```{sh}
 ./generatebed.pl 
 ```
+
+## Final Submission things
+
+master_variantAnalysis.sh is the master script which will generate all reports, etc
+For help running master_variantAnalysis.sh, use:
+```{sh}
+./master_variantAnalysis.sh -h
+```
+or 
+```{sh}
+cat help.txt
+```
+for a sample usage
+

@@ -1,0 +1,2 @@
+usage:
+./master_variantAnalysis.sh -r hg19_refGene.txt -g ./dcm/gene-list-dcm.txt -b Patient1_RG_MD_IR_BQ.bam -v clinvar.vcf -q dcm_gene_list.bed -o ./out/ 
